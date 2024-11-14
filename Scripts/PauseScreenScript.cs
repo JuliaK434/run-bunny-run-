@@ -5,17 +5,11 @@ public class PauseScreenScript : MonoBehaviour
 {
     public void BackToLevel()
     {
-        // Проверяем, задано ли имя уровня
-        if (!string.IsNullOrEmpty(PauseButtonScript.LevelName))
-        {
-            // Возвращаемся на сцену уровня и восстанавливаем масштаб времени
-            SceneManager.LoadScene(PauseButtonScript.LevelName);
-            Time.timeScale = 1;
-        }
-        else
-        {
-            Debug.LogWarning("Имя уровня не задано в LevelName!");
-        }
+        // Возобновляем масштаб времени для продолжения игры
+        Time.timeScale = 1;
+
+        // Закрываем сцену паузы
+        SceneManager.UnloadSceneAsync("PauseScreen");
     }
 
     public void RestartLevel()
