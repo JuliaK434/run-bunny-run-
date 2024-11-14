@@ -12,13 +12,22 @@ public class PauseButtonScript : MonoBehaviour
         LevelName = SceneManager.GetActiveScene().name;
     }
 
+    void Update()
+    {
+        // Проверяем, была ли нажата клавиша ESC
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnPauseButtonPressed(); // Вызываем паузу при нажатии клавиши ESC
+        }
+    }
+
     public void OnPauseButtonPressed()
     {
         // Сохраняем текущее состояние времени и ставим на паузу
         savedTimeScale = Time.timeScale;
         Time.timeScale = 0;
 
-        // Загружаем сцену PauseScreen
+        // Загружаем сцену PauseScreen в режиме Additive
         SceneManager.LoadScene("PauseScreen", LoadSceneMode.Additive);
     }
 }
