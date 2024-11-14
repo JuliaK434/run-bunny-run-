@@ -84,7 +84,7 @@ public class Hero : MonoBehaviour
 
         if (lives <= 0)
         {
-            SceneManager.LoadScene("GameOver"); 
+            SceneManager.LoadScene("UnsuccessScreen"); 
         }
     }
 
