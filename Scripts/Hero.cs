@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class Hero : MonoBehaviour
 {
-    [SerializeField] private float spend = 3f; // Скорость передвижения
-    [SerializeField] private int lives = 1; // Стандартное значение жизней теперь 1
-    [SerializeField] private float jumpForce = 15f; // Сила прыжка
+    [SerializeField] private float spend = 3f; 
+    [SerializeField] private int lives = 1; 
+    [SerializeField] private float jumpForce = 15f;
     private bool isGrounded = false;
 
     private Rigidbody2D rb;
@@ -21,12 +22,21 @@ public class Hero : MonoBehaviour
         set { anim.SetInteger("state", (int)value); }
     }
 
-    private void Awake()
+  private void Awake()
+{
+    if (Instance == null)
     {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        Instance = this; 
     }
+    else
+    {
+        Debug.LogWarning("Multiple instances of Hero detected!"); 
+    }
+
+    rb = GetComponent<Rigidbody2D>();
+    anim = GetComponent<Animator>();
+    sprite = GetComponentInChildren<SpriteRenderer>();
+}
 
     private void FixedUpdate()
     {
@@ -40,6 +50,8 @@ public class Hero : MonoBehaviour
             Run();
         if (isGrounded && Input.GetButtonDown("Jump"))
             Jump();
+
+        CheckFallOutOfBounds(); 
     }
 
     private void Run()
@@ -67,16 +79,22 @@ public class Hero : MonoBehaviour
     public void GetDamage()
     {
         lives -= 1;
-        Debug.Log("hit"); // Выводим "hit" в консоль при каждом изменении жизней
-        Debug.Log(lives); // Выводим текущие значения жизней
-    }
-}
+        Debug.Log("hit"); 
+        Debug.Log(lives); 
 
-public enum States
-{
-    idle,
-    run,
-    jump
+        if (lives <= 0)
+        {
+            SceneManager.LoadScene("GameOver"); 
+        }
+    }
+
+    private void CheckFallOutOfBounds()
+    {
+        if (transform.position.y < -5) 
+        {
+            GetDamage();
+        }
+    }
 }
 
 public enum States
