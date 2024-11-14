@@ -90,7 +90,7 @@ public class Hero : MonoBehaviour
 
     private void CheckFallOutOfBounds()
     {
-        if (transform.position.y < -5) 
+        if (transform.position.y < -10) 
         {
             GetDamage();
         }
