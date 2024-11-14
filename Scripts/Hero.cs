@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
-    [SerializeField] private float spend = 3f; // �������� ��������
-    [SerializeField] private int lives = 5; //���-�� ������
-    [SerializeField] private float jumpForce = 15f; // ���� ������ 
+    [SerializeField] private float spend = 3f; // Скорость передвижения
+    [SerializeField] private int lives = 1; // Стандартное значение жизней теперь 1
+    [SerializeField] private float jumpForce = 15f; // Сила прыжка
     private bool isGrounded = false;
 
     private Rigidbody2D rb;
@@ -67,8 +67,16 @@ public class Hero : MonoBehaviour
     public void GetDamage()
     {
         lives -= 1;
-        Debug.Log(lives);
+        Debug.Log("hit"); // Выводим "hit" в консоль при каждом изменении жизней
+        Debug.Log(lives); // Выводим текущие значения жизней
     }
+}
+
+public enum States
+{
+    idle,
+    run,
+    jump
 }
 
 public enum States
